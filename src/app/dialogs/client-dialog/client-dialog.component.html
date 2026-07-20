@@ -1,0 +1,54 @@
+<h2 mat-dialog-title>
+  {{ isEdit ? 'Edit Client' : 'Add Client' }}
+</h2>
+
+<div mat-dialog-content>
+  <form [formGroup]="clientForm" class="form">
+    <mat-form-field appearance="outline">
+      <mat-label>Full Name</mat-label>
+      <input matInput formControlName="name" />
+      @if (f.name.touched && f.name.invalid) {
+        <mat-error>Name is required (min 2 characters).</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Email</mat-label>
+      <input matInput formControlName="email" />
+      @if (f.email.touched && f.email.invalid) {
+        <mat-error>Valid email is required.</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Phone</mat-label>
+      <input matInput formControlName="phone" />
+      @if (f.phone.touched && f.phone.invalid) {
+        <mat-error>Phone is required.</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Company</mat-label>
+      <input matInput formControlName="company" />
+      @if (f.company.touched && f.company.invalid) {
+        <mat-error>Company is required.</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Status</mat-label>
+      <mat-select formControlName="status">
+        <mat-option value="Active">Active.</mat-option>
+        <mat-option value="Inactive">Inactive</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </form>
+</div>
+
+<div mat-dialog-actions align="end">
+  <button mat-button type="button" (click)="cancel()">Cancel</button>
+  <button mat-flat-button color="primary" (click)="save()">
+    {{ isEdit ? 'Save Changes' : 'Add Client' }}
+  </button>
+</div>

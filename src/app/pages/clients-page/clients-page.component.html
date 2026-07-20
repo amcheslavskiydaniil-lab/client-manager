@@ -1,0 +1,128 @@
+<div class="page">
+  <header class="page-header">
+    <div>
+      <h1>Clients</h1>
+      <p>Manage your clients with a modal add form and a clean table.</p>
+    </div>
+
+    <button mat-flat-button color="primary" (click)="openAddClientDialog()">
+      <mat-icon>person_add</mat-icon>
+      Add Client
+    </button>
+  </header>
+
+  <section class="card">
+    <div class="table-header">
+      <h2>Client List</h2>
+      <span class="count">{{ clientCount() }} total</span>
+    </div>
+
+    @if (clients().length > 0) {
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Phone</th>
+              <th>Company</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+            <tr class="filters">
+              <th>
+                <input
+                  matInput
+                  placeholder="Search..."
+                  [value]="filters().name"
+                  (input)="updateFilter('name', $any($event.target).value)"
+                />
+              </th>
+
+              <th>
+                <input
+                  matInput
+                  placeholder="Search..."
+                  [value]="filters().email"
+                  (input)="updateFilter('email', $any($event.target).value)"
+                />
+              </th>
+
+              <th>
+                <input
+                  matInput
+                  placeholder="Search..."
+                  [value]="filters().phone"
+                  (input)="updateFilter('phone', $any($event.target).value)"
+                />
+              </th>
+
+              <th>
+                <input
+                  matInput
+                  placeholder="Search..."
+                  [value]="filters().company"
+                  (input)="updateFilter('company', $any($event.target).value)"
+                />
+              </th>
+
+              <th>
+                <input
+                  matInput
+                  placeholder="Search..."
+                  [value]="filters().status"
+                  (input)="updateFilter('status', $any($event.target).value)"
+                />
+              </th>
+
+              <th></th>
+            </tr>
+          </thead>
+
+          <tbody>
+            @for (client of filteredClients(); track client.id; let i = $index) {
+              <tr>
+                <td>{{ i + 1 }}</td>
+                <td>{{ client.name }}</td>
+                <td>{{ client.email }}</td>
+                <td>{{ client.phone }}</td>
+                <td>{{ client.company }}</td>
+                <td>
+                  <span
+                    class="status"
+                    [class.active]="client.status === 'Active'"
+                    [class.inactive]="client.status === 'Inactive'"
+                  >
+                    {{ client.status }}
+                  </span>
+                </td>
+                <td>
+                  <button
+                    mat-stroked-button
+                    color="primary"
+                    type="button"
+                    (click)="openEditClientDialog(client)"
+                  >
+                    Edit
+                  </button>
+
+                  <button
+                    mat-stroked-button
+                    color="warn"
+                    type="button"
+                    (click)="removeClient(client.id)"
+                  >
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    } @else {
+      <p class="empty">No clients found. Click “Add Client” to create one.</p>
+    }
+  </section>
+</div>
