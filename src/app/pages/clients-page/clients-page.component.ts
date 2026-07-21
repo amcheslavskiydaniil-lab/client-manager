@@ -27,10 +27,19 @@ export class ClientsPageComponent {
     company: '',
     status: '',
   });
+
+  readonly sort = signal<{
+    field: keyof Client | null;
+    direction: 'asc' | 'desc';
+  }>({
+    field: null,
+    direction: 'asc',
+  });
+
   readonly filteredClients = computed(() => {
     const filters = this.filters();
 
-    return this.clients().filter(
+    const clients = this.clients().filter(
       (client) =>
         client.name.toLowerCase().includes(filters.name.toLowerCase()) &&
         client.email.toLowerCase().includes(filters.email.toLowerCase()) &&
@@ -38,6 +47,21 @@ export class ClientsPageComponent {
         client.company.toLowerCase().includes(filters.company.toLowerCase()) &&
         client.status.toLowerCase().includes(filters.status.toLowerCase()),
     );
+
+    const { field, direction } = this.sort();
+
+    if (!field) {
+      return clients;
+    }
+
+    return [...clients].sort((a, b) => {
+      const first = String(a[field]).toLowerCase();
+      const second = String(b[field]).toLowerCase();
+
+      const result = first.localeCompare(second);
+
+      return direction === 'asc' ? result : -result;
+    });
   });
 
   openAddClientDialog(): void {
@@ -87,5 +111,21 @@ export class ClientsPageComponent {
       ...filters,
       [field]: value,
     }));
+  }
+
+  sortBy(field: keyof Client): void {
+    this.sort.update((current) => {
+      if (current.field !== field) {
+        return {
+          field,
+          direction: 'asc',
+        };
+      }
+
+      return {
+        field,
+        direction: current.direction === 'asc' ? 'desc' : 'asc',
+      };
+    });
   }
 }

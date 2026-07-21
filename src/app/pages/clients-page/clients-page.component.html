@@ -23,11 +23,15 @@
           <thead>
             <tr>
               <th>#</th>
-              <th>Name</th>
-              <th>Email</th>
-              <th>Phone</th>
-              <th>Company</th>
-              <th>Status</th>
+              <th (click)="sortBy('name')">Name</th>
+
+              <th (click)="sortBy('email')">Email</th>
+
+              <th (click)="sortBy('phone')">Phone</th>
+
+              <th (click)="sortBy('company')">Company</th>
+
+              <th (click)="sortBy('status')">Status</th>
               <th>Actions</th>
             </tr>
             <tr class="filters">
