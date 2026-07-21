@@ -36,6 +36,16 @@ export class ClientsPageComponent {
     direction: 'asc',
   });
 
+  getSortIcon(field: keyof Client): string {
+    const sort = this.sort();
+
+    if (sort.field !== field) {
+      return '';
+    }
+
+    return sort.direction === 'asc' ? '▲' : '▼';
+  }
+
   readonly filteredClients = computed(() => {
     const filters = this.filters();
 

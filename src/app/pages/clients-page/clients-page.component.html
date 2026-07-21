@@ -23,18 +23,19 @@
           <thead>
             <tr>
               <th>#</th>
-              <th (click)="sortBy('name')">Name</th>
+              <th (click)="sortBy('name')">Name {{ getSortIcon('name') }}</th>
 
-              <th (click)="sortBy('email')">Email</th>
+              <th (click)="sortBy('email')">Email {{ getSortIcon('email') }}</th>
 
-              <th (click)="sortBy('phone')">Phone</th>
+              <th (click)="sortBy('phone')">Phone {{ getSortIcon('phone') }}</th>
 
-              <th (click)="sortBy('company')">Company</th>
+              <th (click)="sortBy('company')">Company {{ getSortIcon('company') }}</th>
 
-              <th (click)="sortBy('status')">Status</th>
+              <th (click)="sortBy('status')">Status {{ getSortIcon('status') }}</th>
               <th>Actions</th>
             </tr>
             <tr class="filters">
+              <th></th>
               <th>
                 <input
                   matInput
